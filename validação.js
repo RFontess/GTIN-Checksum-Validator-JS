@@ -42,10 +42,12 @@ class validEAN {
 
     calcular(){
         let somaResultados = this.posicoesImpares(this.codArray) + this.posicoesPares(this.codArray);
-        somaResultados = Array.from(somaResultados.toString().split('').map(Number)); 
-        let ultimoDigitoCriado = somaResultados[(somaResultados.length-1)];
+        let ultimoDigitoCriado = somaResultados % 10; //pegar o ultimo digito do valor da soma
+        console.log(this.codArray)
+        console.log(this.posicoesImpares(this.codArray))
+        console.log(this.posicoesPares(this.codArray))
+        console.log(somaResultados)
         ultimoDigitoCriado === 0 ? 0 : ultimoDigitoCriado = Math.abs(ultimoDigitoCriado -10);
-        console.log(ultimoDigitoCriado)
         
         this.codArray.push(ultimoDigitoCriado); //Adiciona o ultimo digito criado no final do array original
         return this.codArray;
@@ -54,11 +56,11 @@ class validEAN {
     validar(){
         
         let somaResultados = this.posicoesImpares(this.codArray.slice(0,-1)) + this.posicoesPares(this.codArray.slice(0,-1)) 
-        somaResultados = Array.from(somaResultados.toString().split(''));
-    
+        
         const ultimoDigitoOriginal = this.codArray[(this.codArray.length-1)];
-    
-        let ultimoDigitoCriado = somaResultados[(somaResultados.length-1)];
+        
+        let ultimoDigitoCriado = somaResultados % 10;
+
         ultimoDigitoCriado === 0 ? 0 : ultimoDigitoCriado = Math.abs(ultimoDigitoCriado -10);
         
         return ultimoDigitoCriado === ultimoDigitoOriginal ? 'Seu código de barras está correto' : 'Seu código de barras está incorreto';
@@ -66,6 +68,5 @@ class validEAN {
 }
 
 const cod1 = new validEAN('9876545353670');
-
-console.log(cod1.validar());
-console.log(cod1.calcular());
+console.log(`validar: ${cod1.validar()}`);
+console.log(`calcular: ${cod1.calcular()}`);
