@@ -1,4 +1,4 @@
-//1. Somar os valores das posições ímpares.
+//1. Somar os valores das posições ímpares. 
 //2. Somar os valores das posições pares e multiplicar o resultado por 3.
 //3. Somar os dois resulados.
 //4. Pegar ultimo dígito.
@@ -7,46 +7,41 @@
 class validEAN {
     constructor(cod) {
         this.cod = cod;
-        this.codArray = this.codArray = Array.from(this.cod).map(Number);
+        this.codArray = Array.from(this.cod).map(Number);
     }
 
     posicoesImpares(cod){
-        const numerosPosicaoImpar = cod.filter(function callback(valor,index) {
-            if(!((index+1) % 2 === 0)){
-                return valor;
-            }
-        });
+        const numerosPosicaoImpar = cod.filter((valor,index) => (index + 1) % 2 !== 0);
+        console.log(`Impar: ${numerosPosicaoImpar}`)
         let somaImpar = 0;
-        
-        numerosPosicaoImpar.forEach(function somar (valor){
-            somaImpar += valor;
-        });
-
+        numerosPosicaoImpar.forEach(valor => somaImpar += valor);
         return somaImpar;
     }    
 
     posicoesPares(cod){
-        const numerosPosicaoPar = cod.filter(function callback(valor,index) {
-            if((index+1) % 2 === 0){
-                return valor;
-            }
-        });
+        const numerosPosicaoPar = cod.filter((valor,index) => (index + 1) % 2 === 0);
+        console.log(`Pares: ${numerosPosicaoPar}`)
         let somaPar = 0;
-        
-        numerosPosicaoPar.forEach(function somar (valor){
-            somaPar += valor;
-        });
-
-        return somaPar*=3;
+        numerosPosicaoPar.forEach(valor => somaPar += valor);
+        return somaPar;
     }
 
+    calcularSomaTotal(cod){
+        let somaImpar = this.posicoesImpares(cod);
+        let somaPar = this.posicoesPares(cod);
+        
+        if (cod.length % 2 === 0) {
+            somaPar *= 3;
+        }
+        else{
+            somaImpar *= 3;
+        }
+
+        return somaImpar + somaPar;
+    }
     calcular(){
-        let somaResultados = this.posicoesImpares(this.codArray) + this.posicoesPares(this.codArray);
-        let ultimoDigitoCriado = somaResultados % 10; //pegar o ultimo digito do valor da soma
-        console.log(this.codArray)
-        console.log(this.posicoesImpares(this.codArray))
-        console.log(this.posicoesPares(this.codArray))
-        console.log(somaResultados)
+        let ultimoDigitoCriado = this.calcularSomaTotal(this.codArray) % 10; //pegar o ultimo digito do valor da soma
+        
         ultimoDigitoCriado === 0 ? 0 : ultimoDigitoCriado = Math.abs(ultimoDigitoCriado -10);
         
         this.codArray.push(ultimoDigitoCriado); //Adiciona o ultimo digito criado no final do array original
@@ -54,12 +49,9 @@ class validEAN {
     }
 
     validar(){
-        
-        let somaResultados = this.posicoesImpares(this.codArray.slice(0,-1)) + this.posicoesPares(this.codArray.slice(0,-1)) 
-        
         const ultimoDigitoOriginal = this.codArray[(this.codArray.length-1)];
         
-        let ultimoDigitoCriado = somaResultados % 10;
+        let ultimoDigitoCriado = this.calcularSomaTotal(this.codArray.slice(0,-1)) % 10;
 
         ultimoDigitoCriado === 0 ? 0 : ultimoDigitoCriado = Math.abs(ultimoDigitoCriado -10);
         
@@ -67,6 +59,6 @@ class validEAN {
     }
 }
 
-const cod1 = new validEAN('9876545353670');
-console.log(`validar: ${cod1.validar()}`);
+const cod1 = new validEAN('11111111111');
+//console.log(`validar: ${cod1.validar()}`);
 console.log(`calcular: ${cod1.calcular()}`);
