@@ -12,7 +12,6 @@ class validEAN {
 
     posicoesImpares(cod){
         const numerosPosicaoImpar = cod.filter((valor,index) => (index + 1) % 2 !== 0);
-        console.log(`Impar: ${numerosPosicaoImpar}`)
         let somaImpar = 0;
         numerosPosicaoImpar.forEach(valor => somaImpar += valor);
         return somaImpar;
@@ -20,7 +19,6 @@ class validEAN {
 
     posicoesPares(cod){
         const numerosPosicaoPar = cod.filter((valor,index) => (index + 1) % 2 === 0);
-        console.log(`Pares: ${numerosPosicaoPar}`)
         let somaPar = 0;
         numerosPosicaoPar.forEach(valor => somaPar += valor);
         return somaPar;
@@ -59,6 +57,8 @@ class validEAN {
     }
 }
 
-const cod1 = new validEAN('11111111111');
-//console.log(`validar: ${cod1.validar()}`);
+const cod1 = new validEAN('43005116832');
 console.log(`calcular: ${cod1.calcular()}`);
+
+const cod2 = new validEAN('238403285092');
+console.log(`calcular: ${cod2.calcular()}`);
