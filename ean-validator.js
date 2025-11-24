@@ -1,9 +1,3 @@
-//1. Somar os valores das posições ímpares. 
-//2. Somar os valores das posições pares e multiplicar o resultado por 3.
-//3. Somar os dois resulados.
-//4. Pegar ultimo dígito.
-//5. Se o resultado for 0, o digito é 0. Se não for 0, subtraia esse último digito do número 10
-
 class validEAN {
     constructor(cod) {
         this.cod = cod;
@@ -42,23 +36,15 @@ class validEAN {
         
         ultimoDigitoCriado === 0 ? 0 : ultimoDigitoCriado = Math.abs(ultimoDigitoCriado -10);
         
-        this.codArray.push(ultimoDigitoCriado); //Adiciona o ultimo digito criado no final do array original
-        return this.codArray;
+        return [...this.codArray, ultimoDigitoCriado];
     }
 
     validar(){
         const ultimoDigitoOriginal = this.codArray[(this.codArray.length-1)];
-        
         let ultimoDigitoCriado = this.calcularSomaTotal(this.codArray.slice(0,-1)) % 10;
 
         ultimoDigitoCriado === 0 ? 0 : ultimoDigitoCriado = Math.abs(ultimoDigitoCriado -10);
         
-        return ultimoDigitoCriado === ultimoDigitoOriginal ? 'Seu código de barras está correto' : 'Seu código de barras está incorreto';
+        return ultimoDigitoCriado === ultimoDigitoOriginal;
     }
 }
-
-const cod1 = new validEAN('43005116832');
-console.log(`calcular: ${cod1.calcular()}`);
-
-const cod2 = new validEAN('238403285092');
-console.log(`calcular: ${cod2.calcular()}`);
