@@ -28,7 +28,8 @@ function executarValidacao(){
     const valorInput = input.value;
     const tamanhosValidos = [8, 12, 13, 14];
     if(!valorInput) return mostrarResultado('❌ Por favor, digite um código.', 'danger');
-    if(!tamanhosValidos.includes(valorInput.length)) return mostrarResultado('❌ O código deve ter pelo menos 8, 12, 13 ou 14 dígitos para ser validado.', 'danger');
+    if(isNaN(valorInput)) return mostrarResultado('❌ O código deve ser númerico e ter 8, 12, 13 ou 14 dígitos para ser validado.', 'danger');
+    if(!tamanhosValidos.includes(valorInput.length)) return mostrarResultado('❌ O código deve ter 8, 12, 13 ou 14 dígitos para ser validado.', 'danger');
     const validacao = new validEAN(valorInput);
     const codigoValidado = validacao.validar();
     
@@ -44,6 +45,7 @@ function executarCalculo(){
     const valorInput = input.value;
     const tamanhosValidos = [7, 11, 12, 13];
     if(!valorInput) return mostrarResultado('❌ Digite os números para calcular o próximo dígito.', 'danger');
+    if(isNaN(valorInput)) return mostrarResultado('❌ O código deve ser númerico e ter 7, 11, 12 ou 13 dígitos para ser calculado.', 'danger');
     if(!tamanhosValidos.includes(valorInput.length)) return mostrarResultado('❌ O código deve ter 7, 11, 12 ou 13 dígitos para ser calculado.', 'danger');
     const calculo = new validEAN(valorInput);
     const codigoCalculado = calculo.calcular().join('');
